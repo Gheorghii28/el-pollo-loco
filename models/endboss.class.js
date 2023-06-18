@@ -3,27 +3,30 @@ class Endboss extends MovableObject {
     height = 404;
     y = 55;
     speed = 0;
-    IMAGES_WALKING = [
-        `../img/4_enemie_boss_chicken/2_alert/G5.png`,
-        `../img/4_enemie_boss_chicken/2_alert/G6.png`,
-        `../img/4_enemie_boss_chicken/2_alert/G7.png`,
-        `../img/4_enemie_boss_chicken/2_alert/G8.png`,
-        `../img/4_enemie_boss_chicken/2_alert/G9.png`,
-        `../img/4_enemie_boss_chicken/2_alert/G10.png`,
-        `../img/4_enemie_boss_chicken/2_alert/G11.png`,
-        `../img/4_enemie_boss_chicken/2_alert/G12.png`
-    ]
+    IMAGES_WALKING = IMAGES.endBoss.IMAGES_WALKING;
+    IMAGES_ALERT = IMAGES.endBoss.IMAGES_ALERT;
+    IMAGES_ATTACK = IMAGES.endBoss.IMAGES_ATTACK;
+    IMAGES_HURT = IMAGES.endBoss.IMAGES_HURT;
+    IMAGES_DEAD = IMAGES.endBoss.IMAGES_DEAD;
 
     constructor() {
         super().loadImage(this.IMAGES_WALKING[0]);
-        this.x = 2450;
+        this.x = 3950;
+        this.speed = 0.15 + Math.random() * 0.25;
         this.loadImages(this.IMAGES_WALKING);
+        this.loadImages(this.IMAGES_ALERT);
+        this.loadImages(this.IMAGES_ATTACK);
+        this.loadImages(this.IMAGES_HURT);
+        this.loadImages(this.IMAGES_DEAD);
         this.animate();
     }
 
     animate() {
+        // setInterval(() => {
+        //     this.moveLeft();
+        // }, this.frameDuration);
         setInterval(() => {
-            this.playAnimation(this.IMAGES_WALKING);
+            this.playAnimation(this.IMAGES_ALERT);
         }, 200);
     }
 }

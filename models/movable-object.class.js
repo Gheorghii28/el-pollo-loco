@@ -1,16 +1,12 @@
-class MovableObject {
-    x = 100;
-    y = 350;
-    img;
-    height = 100;
-    width = 100;
-    currentImage = 0;
+class MovableObject extends DrawableObject {
     speed = 0.1;
     frameDuration = 1000 / 60;
+    frameSpeed = 215;
     otherDirection = false;
-    imageCache = {};
     speedY = 0;
     acceleration = 2.5;
+    energy = 100;
+    lastHit = 0;
 
     applyGravity() {
         setInterval(() => {
@@ -22,20 +18,11 @@ class MovableObject {
     }
 
     isAboveGround() {
-        return this.y < 142;
-    }
-
-    loadImage(path) {
-        this.img = new Image();
-        this.img.src = path;
-    }
-
-    loadImages(arr) {
-        arr.forEach(path => {
-            let img = new Image();
-            img.src = path;
-            this.imageCache[path] = img;
-        });
+        if(this instanceof ThrowableObject) {
+            return true;
+        } else {
+            return this.y < 199;
+        }
     }
 
     moveRight() {
@@ -53,7 +40,40 @@ class MovableObject {
         this.currentImage++;
     }
 
-    draw(ctx) {
-        ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
+    isColliding(obj) {
+            // Bessere Formel zur Kollisionsberechnung (Genauer)
+        // return (this.X + this.width) >= obj.X && this.X <= (obj.X + obj.width) &&
+        //     (this.Y + this.offsetY + this.height) >= obj.Y &&
+        //     (this.Y + this.offsetY) <= (obj.Y + obj.height) &&
+        //     obj.onCollisionCourse; // Optional: hiermit könnten wir schauen, ob ein Objekt sich in die richtige Richtung bewegt. Nur dann kollidieren wir. Nützlich bei Gegenständen, auf denen man stehen kann.
+       
+        // if(this instanceof Character) {
+        //     this.x += 20;
+        //     this.y += 80;
+        //     this.width -= 50;
+        //     this.height -= 90;
+        // }
+        return this.x + 20 + this.width - 50 > obj.x &&
+            this.y + 80 + this.height - 90 > obj.y &&
+            this.x + 20 < obj.x &&
+            this.y + 80 < obj.y + obj.height;
+    }
+
+    hit() {
+        this.energy -=2;
+        if(this.energy < 0) {
+            this.energy = 0;
+        } else {
+            this.lastHit = new Date().getTime();
+        }
+    }
+
+    isHurt() {
+        let timePassed = new Date().getTime() - this.lastHit;
+        return timePassed < 500;
+    }
+
+    isDead() {
+        return this.energy == 0;
     }
 }

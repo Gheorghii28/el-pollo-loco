@@ -38,6 +38,8 @@ class World {
     run() {
         setInterval(() => {
             this.checkCollision();
+        }, 1000 / 60);
+        setInterval(() => {
             this.checkThrowObjects();
         }, 1000 / 5);
     }
@@ -49,11 +51,24 @@ class World {
         }
     }
 
+    handleCollision(enemy) {
+        if (this.character.isCollisionFromAbove(enemy)) {
+            enemy.dead();
+            setTimeout(() => {
+                this.character.removeCollectiblesFromLevel(this.level.enemies, enemy);
+            }, 500);
+        } else {
+            if (!enemy.isDead()) {
+                this.character.hit();
+                this.statusBarHealth.setPercentage(this.character.energy);
+            }
+        }
+    }
+
     checkCollision() {
         this.level.enemies.forEach(enemy => {
             if (this.character.isColliding(enemy)) {
-                this.character.hit();
-                this.statusBarHealth.setPercentage(this.character.energy);
+                this.handleCollision(enemy);
             }
         });
         this.level.coins.forEach(coin => {
@@ -116,7 +131,7 @@ class World {
         }
 
         mo.draw(this.ctx);
-        mo.drawFrame(this.ctx);
+        // mo.drawFrame(this.ctx);
 
         if (mo.otherDirection) {
             this.flipImageBack(mo);

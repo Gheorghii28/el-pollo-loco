@@ -13,6 +13,7 @@ class Character extends MovableObject {
         right: 30
     }
 
+
     IMAGES_IDLE = IMAGES.character.IMAGES_IDLE;
     IMAGES_LONG_IDLE = IMAGES.character.IMAGES_LONG_IDLE;
     IMAGES_WALKING = IMAGES.character.IMAGES_WALKING;
@@ -81,7 +82,7 @@ class Character extends MovableObject {
     }
 
     collectCoin(coin) {
-        this.totalCoin += 2;
+        this.totalCoin += 10;
         if (this.totalCoin > 100) {
             this.totalCoin = 100;
         }
@@ -89,7 +90,7 @@ class Character extends MovableObject {
     }
 
     collectBottle(bottle) {
-        this.totalBottle += 2;
+        this.totalBottle += 10;
         if (this.totalBottle > 100) {
             this.totalBottle = 100;
         }

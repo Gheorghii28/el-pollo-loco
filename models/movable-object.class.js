@@ -9,7 +9,7 @@ class MovableObject extends DrawableObject {
     totalCoin = 0;
     totalBottle = 0;
     lastHit = 0;
-    
+
 
     applyGravity() {
         setInterval(() => {
@@ -44,31 +44,22 @@ class MovableObject extends DrawableObject {
     }
 
     isColliding(obj) {
-        // Bessere Formel zur Kollisionsberechnung (Genauer)
-        // return (this.X + this.width) >= obj.X && this.X <= (obj.X + obj.width) &&
-        //     (this.Y + this.offsetY + this.height) >= obj.Y &&
-        //     (this.Y + this.offsetY) <= (obj.Y + obj.height) &&
-        //     obj.onCollisionCourse; // Optional: hiermit könnten wir schauen, ob ein Objekt sich in die richtige Richtung bewegt. Nur dann kollidieren wir. Nützlich bei Gegenständen, auf denen man stehen kann.
-
-        // if(this instanceof Character) {
-        //     this.x += 20;
-        //     this.y += 80;
-        //     this.width -= 50;
-        //     this.height -= 90;
-        // }
-
-        // return 
-        //     this.x + 20 + this.width - 50 > obj.x &&  right 
-        //     this.x + 20 < obj.x &&                    left  
-        //     this.y + 80 + this.height - 90 > obj.y && bottom  
-        //     this.y + 80 < obj.y + obj.height;         top    
-
-
-        // console.log(this)
         return this.x + this.width - this.offset.right >= obj.x + obj.offset.left &&
             this.x + this.offset.left <= obj.x + obj.width - obj.offset.right &&
             this.y + this.height - this.offset.bottom >= obj.y + obj.offset.top &&
             this.y + this.offset.top <= obj.y + obj.height - obj.offset.bottom;
+    }
+
+    isCollisionFromAbove(obj) {
+        return this.y + this.height >= obj.y &&
+        this.y + this.height <  obj.y + obj.height;
+
+    }
+
+    checkCollisionFromAbove() {
+        if (this.y + this.height >= obj.y) {
+            console.log("Chicken dead");
+        }
     }
 
     hit() {
@@ -87,5 +78,9 @@ class MovableObject extends DrawableObject {
 
     isDead() {
         return this.energy == 0;
+    }
+
+    dead() {
+        this.energy = 0;
     }
 }

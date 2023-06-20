@@ -10,7 +10,7 @@ class StatusBarCoin extends DrawableObject {
         this.y = 52;
         this.width = 198;
         this.height = 52;
-        this.setPercentage(100);
+        this.setPercentage(0);
     }
 
     setPercentage(percentage) {

@@ -3,6 +3,14 @@ class Endboss extends MovableObject {
     height = 404;
     y = 55;
     speed = 0;
+    world;
+    offset = {
+        top: 80,
+        bottom: 10,
+        left: 0,
+        right: 0
+    }
+    hadFirstContact = false;
     IMAGES_WALKING = IMAGES.endBoss.IMAGES_WALKING;
     IMAGES_ALERT = IMAGES.endBoss.IMAGES_ALERT;
     IMAGES_ATTACK = IMAGES.endBoss.IMAGES_ATTACK;
@@ -25,8 +33,24 @@ class Endboss extends MovableObject {
         // setInterval(() => {
         //     this.moveLeft();
         // }, this.frameDuration);
+        let i = 0;
         setInterval(() => {
-            this.playAnimation(this.IMAGES_ALERT);
+            if (i < 10) {
+                this.playAnimation(this.IMAGES_ALERT);
+            } else {
+                this.playAnimation(this.IMAGES_WALKING);
+                if (this.hadFirstContact) {
+                    setInterval(() => {
+                        this.moveLeft();
+                    }, this.frameDuration);
+                }
+            }
+            i++;
+            if (this.world.character.x > 3500 && !this.hadFirstContact) {
+                i = 0;
+                this.hadFirstContact = true;
+            }
+
         }, 200);
     }
 }

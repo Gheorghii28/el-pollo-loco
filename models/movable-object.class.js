@@ -6,7 +6,10 @@ class MovableObject extends DrawableObject {
     speedY = 0;
     acceleration = 2.5;
     energy = 100;
+    totalCoin = 0;
+    totalBottle = 0;
     lastHit = 0;
+    
 
     applyGravity() {
         setInterval(() => {
@@ -18,7 +21,7 @@ class MovableObject extends DrawableObject {
     }
 
     isAboveGround() {
-        if(this instanceof ThrowableObject) {
+        if (this instanceof ThrowableObject) {
             return true;
         } else {
             return this.y < 199;
@@ -41,27 +44,36 @@ class MovableObject extends DrawableObject {
     }
 
     isColliding(obj) {
-            // Bessere Formel zur Kollisionsberechnung (Genauer)
+        // Bessere Formel zur Kollisionsberechnung (Genauer)
         // return (this.X + this.width) >= obj.X && this.X <= (obj.X + obj.width) &&
         //     (this.Y + this.offsetY + this.height) >= obj.Y &&
         //     (this.Y + this.offsetY) <= (obj.Y + obj.height) &&
         //     obj.onCollisionCourse; // Optional: hiermit könnten wir schauen, ob ein Objekt sich in die richtige Richtung bewegt. Nur dann kollidieren wir. Nützlich bei Gegenständen, auf denen man stehen kann.
-       
+
         // if(this instanceof Character) {
         //     this.x += 20;
         //     this.y += 80;
         //     this.width -= 50;
         //     this.height -= 90;
         // }
-        return this.x + 20 + this.width - 50 > obj.x &&
-            this.y + 80 + this.height - 90 > obj.y &&
-            this.x + 20 < obj.x &&
-            this.y + 80 < obj.y + obj.height;
+
+        // return 
+        //     this.x + 20 + this.width - 50 > obj.x &&  right 
+        //     this.x + 20 < obj.x &&                    left  
+        //     this.y + 80 + this.height - 90 > obj.y && bottom  
+        //     this.y + 80 < obj.y + obj.height;         top    
+
+
+        // console.log(this)
+        return this.x + this.width - this.offset.right >= obj.x + obj.offset.left &&
+            this.x + this.offset.left <= obj.x + obj.width - obj.offset.right &&
+            this.y + this.height - this.offset.bottom >= obj.y + obj.offset.top &&
+            this.y + this.offset.top <= obj.y + obj.height - obj.offset.bottom;
     }
 
     hit() {
-        this.energy -=2;
-        if(this.energy < 0) {
+        this.energy -= 2;
+        if (this.energy < 0) {
             this.energy = 0;
         } else {
             this.lastHit = new Date().getTime();

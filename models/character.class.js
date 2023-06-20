@@ -6,6 +6,12 @@ class Character extends MovableObject {
     height = 240;
     world;
     walkingSound = new Audio(`../audio/walk.mp3`);
+    offset = {
+        top: 80,
+        bottom: 10,
+        left: 20,
+        right: 30
+    }
 
     IMAGES_IDLE = IMAGES.character.IMAGES_IDLE;
     IMAGES_LONG_IDLE = IMAGES.character.IMAGES_LONG_IDLE;
@@ -30,31 +36,32 @@ class Character extends MovableObject {
         setInterval(() => {
             this.walkingSound.pause();
             this.walkingSound.playbackRate = 3;
-            
+
             if (this.world.keyboard.RIGHT && this.x < this.world.level.levelEndX) {
                 this.moveRight();
+                // console.log(this.x)
                 this.otherDirection = false;
                 this.walkingSound.play();
             }
             if (this.world.keyboard.LEFT) {
-                if(this.x > this.world.level.levelStartX) {
+                if (this.x > this.world.level.levelStartX) {
                     this.moveLeft();
                 }
                 this.otherDirection = true;
                 this.walkingSound.play();
             }
-            if(this.world.keyboard.SPACE && !this.isAboveGround()) {
+            if (this.world.keyboard.SPACE && !this.isAboveGround()) {
                 this.jump();
             }
-            if(this.x < 3640 && this.x > -719) {
+            if (this.x < 3640 && this.x > -719) {
                 this.world.camera_x = -this.x + 50;
             }
         }, 1000 / 60);
 
         setInterval(() => {
-            if(this.isDead()) {
+            if (this.isDead()) {
                 this.playAnimation(this.IMAGES_DEAD);
-            } else if(this.isHurt()) {
+            } else if (this.isHurt()) {
                 this.playAnimation(this.IMAGES_HURT);
             } else if (this.isAboveGround()) {
                 this.playAnimation(this.IMAGES_JUMPING)
@@ -71,5 +78,34 @@ class Character extends MovableObject {
 
     jump() {
         this.speedY = 30;
+    }
+
+    collectCoin(coin) {
+        this.totalCoin += 2;
+        if (this.totalCoin > 100) {
+            this.totalCoin = 100;
+        }
+        this.removeCollectiblesFromLevel(this.world.level.coins, coin)
+    }
+
+    collectBottle(bottle) {
+        this.totalBottle += 2;
+        if (this.totalBottle > 100) {
+            this.totalBottle = 100;
+        }
+        this.removeCollectiblesFromLevel(this.world.level.bottles, bottle);
+    }
+
+    removeCollectiblesFromLevel(collectiblesArr, collectible) {
+        collectiblesArr.forEach((el, index) => {
+            if (
+                collectible.x === el.x &&
+                collectible.y === el.y &&
+                collectible.width === el.width &&
+                collectible.height === el.height
+            ) {
+                collectiblesArr.splice(index, 1);
+            }
+        });
     }
 }

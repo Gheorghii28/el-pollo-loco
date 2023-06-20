@@ -1,5 +1,5 @@
 class ThrowableObject extends MovableObject {
-    
+
     IMAGES_ROTATION = IMAGES.bottle.IMAGES_ROTATION;
     IMAGES_SPLASH = IMAGES.bottle.IMAGES_SPLASH;
 
@@ -8,8 +8,8 @@ class ThrowableObject extends MovableObject {
         this.loadImages(this.IMAGES_ROTATION);
         this.x = x;
         this.y = y;
-        this.width = 80;
-        this.height = 80;
+        this.width = 60;
+        this.height = 60;
         this.throw();
     }
 

@@ -13,8 +13,8 @@ const level1 = new Level(
         new ChickenSmall(),
         new ChickenSmall(),
         new ChickenSmall(),
-        new ChickenSmall(),
-        new Endboss()
+        new ChickenSmall()
+        // new Endboss()
     ],
 
     [
@@ -73,6 +73,51 @@ const level1 = new Level(
 
         new Air(719 * 6),
         new Air(719 * 7)
+    ],
+
+    [
+        new Bottle(`../img/6_salsa_bottle/1_salsa_bottle_on_ground.png`, 370),
+        new Bottle(`../img/6_salsa_bottle/2_salsa_bottle_on_ground.png`, 370),
+        new Bottle(`../img/6_salsa_bottle/salsa_bottle.png`, 200),
+
+        new Bottle(`../img/6_salsa_bottle/1_salsa_bottle_on_ground.png`, 370),
+        new Bottle(`../img/6_salsa_bottle/2_salsa_bottle_on_ground.png`, 370),
+        new Bottle(`../img/6_salsa_bottle/salsa_bottle.png`, 200),
+
+        new Bottle(`../img/6_salsa_bottle/1_salsa_bottle_on_ground.png`, 370),
+        new Bottle(`../img/6_salsa_bottle/2_salsa_bottle_on_ground.png`, 370),
+        new Bottle(`../img/6_salsa_bottle/salsa_bottle.png`, 200),
+
+        new Bottle(`../img/6_salsa_bottle/1_salsa_bottle_on_ground.png`, 370),
+        new Bottle(`../img/6_salsa_bottle/2_salsa_bottle_on_ground.png`, 370),
+        new Bottle(`../img/6_salsa_bottle/salsa_bottle.png`, 200),
+
+        new Bottle(`../img/6_salsa_bottle/1_salsa_bottle_on_ground.png`, 370),
+        new Bottle(`../img/6_salsa_bottle/2_salsa_bottle_on_ground.png`, 370),
+        new Bottle(`../img/6_salsa_bottle/salsa_bottle.png`, 200)
+    ],
+
+    [
+        new Coin(`../img/8_coin/coin_1.png`, 370),
+        new Coin(`../img/8_coin/coin_1.png`, 200),
+
+        new Coin(`../img/8_coin/coin_1.png`, 370),
+        new Coin(`../img/8_coin/coin_1.png`, 200),
+
+        new Coin(`../img/8_coin/coin_1.png`, 370),
+        new Coin(`../img/8_coin/coin_1.png`, 200),
+
+        new Coin(`../img/8_coin/coin_1.png`, 370),
+        new Coin(`../img/8_coin/coin_1.png`, 200),
+
+        new Coin(`../img/8_coin/coin_1.png`, 370),
+        new Coin(`../img/8_coin/coin_1.png`, 200),
+
+        new Coin(`../img/8_coin/coin_1.png`, 370),
+        new Coin(`../img/8_coin/coin_1.png`, 200),
+
+        new Coin(`../img/8_coin/coin_1.png`, 370),
+        new Coin(`../img/8_coin/coin_1.png`, 200)
     ]
 );
 

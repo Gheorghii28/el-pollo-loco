@@ -1,16 +1,24 @@
 class World {
     character = new Character();
+    endBoss = new Endboss();
     level = level1;
     canvas;
     ctx;
     keyboard;
     camera_x = 100;
     statusBarHealth = new StatusBarHealth();
-    StatusBarCoin = new StatusBarCoin();
-    StatusBarBottle = new StatusBarBottle();
+    statusBarCoin = new StatusBarCoin();
+    statusBarBottle = new StatusBarBottle();
     statusBarEndBoss = new StatusBarEndBoss();
     iconEndBoss = new IconEndBoss();
     throwableObject = [];
+    offset = {
+        top: 0,
+        bottom: 0,
+        left: 0,
+        right: 0,
+    }
+    requestId;
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext(`2d`);
@@ -22,19 +30,20 @@ class World {
     }
 
     setWorld() {
+
         this.character.world = this;
+        this.endBoss.world = this;
     }
 
     run() {
         setInterval(() => {
-
             this.checkCollision();
             this.checkThrowObjects();
         }, 1000 / 5);
     }
 
     checkThrowObjects() {
-        if(this.keyboard.D) {
+        if (this.keyboard.D) {
             let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
             this.throwableObject.push(bottle);
         }
@@ -47,26 +56,44 @@ class World {
                 this.statusBarHealth.setPercentage(this.character.energy);
             }
         });
+        this.level.coins.forEach(coin => {
+            if (this.character.isColliding(coin)) {
+                this.character.collectCoin(coin);
+
+                this.statusBarCoin.setPercentage(this.character.totalCoin);
+            }
+        });
+        this.level.bottles.forEach(bottle => {
+            if (this.character.isColliding(bottle)) {
+                this.character.collectBottle(bottle);
+                this.statusBarBottle.setPercentage(this.character.totalBottle);
+            }
+        });
     }
 
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
         this.ctx.translate(this.camera_x, 0);
-        
+
         this.addObjectsToMap(this.level.air);
         this.addObjectsToMap(this.level.backgroundObjects);
         this.addObjectsToMap(this.level.clouds);
 
+        this.addObjectsToMap(this.level.bottles);
+        this.addObjectsToMap(this.level.coins);
+
+
         this.ctx.translate(-this.camera_x, 0);
         this.addToMap(this.statusBarHealth);
-        this.addToMap(this.StatusBarCoin);
-        this.addToMap(this.StatusBarBottle);
+        this.addToMap(this.statusBarCoin);
+        this.addToMap(this.statusBarBottle);
         this.addToMap(this.statusBarEndBoss);
         this.addToMap(this.iconEndBoss);
         this.ctx.translate(this.camera_x, 0);
 
         this.addToMap(this.character);
+        this.addToMap(this.endBoss);
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.throwableObject);
 
@@ -107,6 +134,4 @@ class World {
         mo.x = mo.x * -1;
         this.ctx.restore();
     }
-
-
 }

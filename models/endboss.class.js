@@ -7,8 +7,8 @@ class Endboss extends MovableObject {
     offset = {
         top: 80,
         bottom: 10,
-        left: 0,
-        right: 0
+        left: 20,
+        right: 30
     }
     hadFirstContact = false;
     continueMoving = true;
@@ -17,7 +17,8 @@ class Endboss extends MovableObject {
         isAlert: false,
         isAttacking: false,
         isHurt: false,
-        isDead: false
+        isDead: false,
+        isDeadEnd: false
     }
     currentAnimation = null;
 
@@ -26,6 +27,7 @@ class Endboss extends MovableObject {
     IMAGES_ATTACK = IMAGES.endBoss.IMAGES_ATTACK;
     IMAGES_HURT = IMAGES.endBoss.IMAGES_HURT;
     IMAGES_DEAD = IMAGES.endBoss.IMAGES_DEAD;
+    IMAGES_IS_DEAD = IMAGES.endBoss.IMAGES_IS_DEAD;
 
     constructor() {
         super().loadImage(this.IMAGES_WALKING[0]);
@@ -45,6 +47,11 @@ class Endboss extends MovableObject {
                 this.hadFirstContact = true;
                 this.setAnimationState('isAlert');
             }
+
+            if(this.isDead()) {
+                this.setAnimationState(`isDead`);
+                
+            }
     
             if (this.animations.isWalking && this.currentAnimation !== 'isWalking') {
                 this.currentAnimation = 'isWalking';
@@ -58,19 +65,7 @@ class Endboss extends MovableObject {
                 this.currentAnimation = null;
                 this.startMovingAnimation();
             }
-    
-            if (this.animations.isHurt && this.currentAnimation !== 'isHurt') {
-                this.currentAnimation = 'isHurt';
-                this.playAnimation(this.IMAGES_HURT);
-                this.currentAnimation = null;
-            }
-    
-            if (this.animations.isDead && this.currentAnimation !== 'isDead') {
-                this.currentAnimation = 'isDead';
-                this.playAnimation(this.IMAGES_DEAD);
-                this.currentAnimation = null;
-            }
-    
+
             if (this.animations.isAttacking && this.currentAnimation !== 'isAttacking') {
                 this.currentAnimation = 'isAttacking';
                 this.playAnimation(this.IMAGES_ATTACK);
@@ -78,6 +73,29 @@ class Endboss extends MovableObject {
                 setTimeout(() => { this.setAnimationState('isAlert'); }, 1000);
                 this.continueMoving = true;
             }
+    
+            if (this.animations.isHurt && this.currentAnimation !== 'isHurt') {
+                this.currentAnimation = 'isHurt';
+                this.playAnimation(this.IMAGES_HURT);
+                this.currentAnimation = null;
+                this.startMovingAnimation();
+            }
+    
+            if (this.animations.isDead && this.currentAnimation !== 'isDead') {
+                this.currentAnimation = 'isDead';
+                this.playAnimation(this.IMAGES_DEAD);
+                this.currentAnimation = null;
+                this.setAnimationState(`isDeadEnd`);
+            }
+
+            if (this.animations.isDeadEnd) {
+                this.currentAnimation = 'isDeadEnd';
+                this.playAnimation(this.IMAGES_IS_DEAD);
+                // this.currentAnimation = null;
+            }
+            //  && this.currentAnimation !== 'isDeadEnd'
+    
+
         }, 200);
     }
     

@@ -48,9 +48,9 @@ class DrawableObject {
                 );
             } else if (this instanceof Endboss) {
                 ctx.rect(
-                    this.x,
+                    this.x + 20,
                     this.y + 80,
-                    this.width,
+                    this.width -50,
                     this.height - 90
                 );
             } else if (this instanceof Coin) {
@@ -72,5 +72,18 @@ class DrawableObject {
             }
             ctx.stroke();
         }
+    }
+
+    removeCollectiblesFromLevel(collectiblesArr, collectible) {
+        collectiblesArr.forEach((el, index) => {
+            if (
+                collectible.x === el.x &&
+                collectible.y === el.y &&
+                collectible.width === el.width &&
+                collectible.height === el.height
+            ) {
+                collectiblesArr.splice(index, 1);
+            }
+        });
     }
 }

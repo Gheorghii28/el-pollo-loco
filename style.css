@@ -18,15 +18,103 @@ body {
     background-attachment: fixed;
 }
 
+.d-none {
+    display: none !important;
+}
+
+#main {
+    width: 720px;
+    height: 480px;
+    position: relative;
+}
+
 canvas {
     /* display: none !important; */
+    width: 100%;
+    height: 100%;
+
     background-color: black;
     display: block;
     border-radius: 10px;
 }
 
+#utility-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+}
+
+#start-screen {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    position: absolute;
+    top: 0;
+}
+
+#game-over-screen {
+    width: 0;
+    height: 0;
+    border-radius: 10px;
+}
+
+.game-over-animation-open {
+    animation-fill-mode: forwards;
+    animation-name: openGameOverScreen;
+    animation-duration: 1s;
+    animation-delay: 1s;
+}
+
+#nav-bar {
+    display: flex;
+    position: absolute;
+    top: -72px;
+    right: 0;
+    z-index: 10;
+    gap: 20px;
+    padding: 20px;
+}
+
+#nav-bar img {
+    cursor: pointer;
+}
+
+#sound-icon,
+#info-icon {
+    padding: 5px;
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 10px;
+    transition: all 0.225s;
+}
+
+.sound-icon-clicked {
+    opacity: 0.3;
+}
+
+
+#sound-icon:hover,
+#info-icon:hover {
+    transform: scale(1.05);
+}
+
+@keyframes openGameOverScreen {
+    from {
+        width: 0;
+        height: 0;
+    }
+
+    to {
+        width: 100%;
+        height: 100%;
+    }
+}
+
 @media only screen and (max-width: 720px) {
-    canvas {
+    #main {
         width: 100%;
     }
 }
@@ -36,7 +124,7 @@ canvas {
         display: none;
     }
 
-    canvas {
+    #main {
         width: 100%;
         height: 100vh;
     }

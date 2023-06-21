@@ -12,6 +12,7 @@ class World {
     statusBarEndBoss = new StatusBarEndBoss();
     iconEndBoss = new IconEndBoss();
     throwableObject = [];
+    splashObject = [];
     offset = {
         top: 0,
         bottom: 0,
@@ -84,6 +85,21 @@ class World {
                 this.statusBarBottle.setPercentage(this.character.totalBottle);
             }
         });
+        this.throwableObject.forEach(obj => {
+            if (this.endBoss.isColliding(obj)) {
+                setTimeout(() => {
+                    let splash = new SplashObject(obj.x, obj.y);
+                    this.endBoss.removeCollectiblesFromLevel(this.throwableObject, obj);
+                    this.splashObject.push(splash);
+                    setTimeout(() => { 
+                        this.endBoss.removeCollectiblesFromLevel(this.splashObject, splash);
+                    }, 50);
+                }, 100);
+                this.endBoss.hit();
+                this.endBoss.setAnimationState(`isHurt`);
+                this.statusBarEndBoss.setPercentage(this.endBoss.energy);
+            }
+        });
     }
 
     draw() {
@@ -111,6 +127,7 @@ class World {
         this.addToMap(this.endBoss);
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.throwableObject);
+        this.addObjectsToMap(this.splashObject);
 
         this.ctx.translate(-this.camera_x, 0);
 

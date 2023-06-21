@@ -40,7 +40,6 @@ class Character extends MovableObject {
 
             if (this.world.keyboard.RIGHT && this.x < this.world.level.levelEndX) {
                 this.moveRight();
-                // console.log(this.x)
                 this.otherDirection = false;
                 this.walkingSound.play();
             }
@@ -95,18 +94,5 @@ class Character extends MovableObject {
             this.totalBottle = 100;
         }
         this.removeCollectiblesFromLevel(this.world.level.bottles, bottle);
-    }
-
-    removeCollectiblesFromLevel(collectiblesArr, collectible) {
-        collectiblesArr.forEach((el, index) => {
-            if (
-                collectible.x === el.x &&
-                collectible.y === el.y &&
-                collectible.width === el.width &&
-                collectible.height === el.height
-            ) {
-                collectiblesArr.splice(index, 1);
-            }
-        });
     }
 }

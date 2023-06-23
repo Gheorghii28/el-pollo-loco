@@ -45,19 +45,58 @@
 
 <body onload="init()">
 
-    <h1>El pollo loco</h1>
+    <h1 id="headline">El pollo loco</h1>
 
     <div id="main">
         <canvas id="canvas" width="720" height="480"></canvas>
         <div id="utility-container">
-            <img class="d-none" id="start-screen" src="./img/9_intro_outro_screens/start/startscreen_1.png">
+            <img class="" id="start-screen" src="./img/9_intro_outro_screens/start/startscreen_1.png">
             <img id="game-over-screen" src="./img/9_intro_outro_screens/game_over/game over.png">
-            <div id="nav-bar">
+            <div class="top-0" id="nav-bar-right">
                 <div>
-                    <img onclick="toggleSound(this)" id="sound-icon" src="./img/sound-waves.png">
+                    <img onclick="toggleSound(this)" id="sound-icon" class="sound-icon-clicked" src="./img/icons/sound-waves.png">
                 </div>
                 <div>
-                    <img id="info-icon" src="./img/about.png">
+                    <img id="info-icon" src="./img/icons/about.png">
+                </div>
+            </div>
+            <div class="top-0 gap-0" id="nav-bar-left">
+                <div>
+                    <img onclick="showStartScreen()" id="backward-icon" class="d-none" src="./img/icons/backward.png">
+                </div>
+                <div>
+                    <img onclick="maximizeScreen()" id="maximize-icon" src="./img/icons/maximize.png">
+                </div>
+                <div>
+                    <img onclick="minimizeScreen()" id="minimize-icon" class="d-none" src="./img/icons/minimize.png">
+                </div>
+            </div>
+            <div id="play-container">
+                <img onclick="hideStartScreen()" id="play-button" src="./img/icons/play-button.png">
+            </div>
+            <div id="pause-container">
+                <div>
+                    <img onclick="showControls()" id="pause-button" class="d-none" src="./img/icons/pause-button.png">
+                </div>
+                <div>
+                    <img onclick="hideControls()" id="play-button-small" class="d-none"
+                        src="./img/icons/play-button-small.png">
+                </div>
+            </div>
+            <div id="movement-container" class="d-none">
+                <div ontouchstart="setKeyboardLeft(event)" ontouchend="resetKeyboardLeft(event)">
+                    <img id="left-button" class="" src="./img/icons/left.png">
+                </div>
+                <div ontouchstart="setKeyboardRight(event)" ontouchend="resetKeyboardRight(event)">
+                    <img id="right-button" class="" src="./img/icons/right.png">
+                </div>
+            </div>
+            <div id="actions-container" class="d-none">
+                <div ontouchstart="setKeyboardJump(event)" ontouchend="resetKeyboardJump(event)">
+                    <img id="jump-button" class="" src="./img/icons/jump.png">
+                </div>
+                <div ontouchstart="setKeyboardThrow(event)" ontouchend="resetKeyboardThrow(event)">
+                    <img id="bottle-button" class="" src="./img/icons/bottle.png">
                 </div>
             </div>
         </div>

@@ -22,6 +22,30 @@ body {
     display: none !important;
 }
 
+.top-0 {
+    top: 0 !important;
+}
+
+.translucent-bg {
+    background-color: rgba(0, 0, 0, 0.7) !important;
+}
+
+.gap-0 {
+    gap: 0 !important;
+}
+
+.width-100 {
+    width: 100% !important;
+}
+
+.height-100 {
+    height: 100vh !important;
+}
+
+.border-radius-0 {
+    border-radius: 0 !important;
+}
+
 #main {
     width: 720px;
     height: 480px;
@@ -36,6 +60,7 @@ canvas {
     background-color: black;
     display: block;
     border-radius: 10px;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
 #utility-container {
@@ -46,6 +71,7 @@ canvas {
     justify-content: center;
     position: absolute;
     top: 0;
+    border-radius: 10px;
 }
 
 #start-screen {
@@ -54,12 +80,14 @@ canvas {
     border-radius: 10px;
     position: absolute;
     top: 0;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
 #game-over-screen {
     width: 0;
     height: 0;
     border-radius: 10px;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
 .game-over-animation-open {
@@ -69,7 +97,8 @@ canvas {
     animation-delay: 1s;
 }
 
-#nav-bar {
+#nav-bar-right,
+#nav-bar-left {
     display: flex;
     position: absolute;
     top: -72px;
@@ -79,26 +108,119 @@ canvas {
     padding: 20px;
 }
 
-#nav-bar img {
-    cursor: pointer;
+#nav-bar-left {
+    left: 0px;
+    max-width: max-content;
 }
 
 #sound-icon,
-#info-icon {
+#info-icon,
+#play-button,
+#pause-button,
+#play-button-small,
+#backward-icon,
+#maximize-icon,
+#minimize-icon,
+#left-button,
+#right-button,
+#jump-button,
+#bottle-button {
     padding: 5px;
     background-color: rgba(0, 0, 0, 0.7);
     border-radius: 10px;
     transition: all 0.225s;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+}
+
+#left-button,
+#right-button,
+#jump-button,
+#bottle-button {
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+#pause-button,
+#play-button-small {
+    padding: 0px;
+    border-radius: 5px;
+}
+
+#play-button-small {
+    padding: 0 2px;
+}
+
+#pause-button {
+    opacity: 0.3;
+}
+
+#pause-button:hover {
+    opacity: 1;
 }
 
 .sound-icon-clicked {
     opacity: 0.3;
 }
 
+#maximize-icon,
+#minimize-icon {
+    transform: rotate(90deg);
+}
 
 #sound-icon:hover,
-#info-icon:hover {
+#info-icon:hover,
+#play-button:hover,
+#pause-button:hover,
+#play-button-small:hover,
+#backward-icon:hover,
+#maximize-icon:hover,
+#minimize-icon:hover {
     transform: scale(1.05);
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+#play-container,
+#pause-container,
+#movement-container,
+#actions-container {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#movement-container,
+#actions-container {
+    max-width: max-content !important;;
+    gap: 50px;
+    height: 54px;
+    margin-left: 20px;
+}
+
+#movement-container {
+    left: 0;
+}
+
+#actions-container {
+    right: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 20px;
+}
+
+#actions-container img {
+    width: 42px;
+    height: 42px;
+}
+
+#play-button {
+    padding: 0 10px;
+}
+
+#pause-container {
+    top: 0 !important;
 }
 
 @keyframes openGameOverScreen {
@@ -117,15 +239,25 @@ canvas {
     #main {
         width: 100%;
     }
+
+    #maximize-icon,
+    #minimize-icon {
+        display: none;
+    }
 }
 
 @media only screen and (max-height: 480px) {
-    h1 {
+    #headline {
         display: none;
     }
 
     #main {
         width: 100%;
         height: 100vh;
+    }
+
+    #maximize-icon,
+    #minimize-icon {
+        display: none;
     }
 }

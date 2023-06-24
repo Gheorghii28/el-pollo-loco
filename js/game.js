@@ -85,6 +85,8 @@ function hideStartScreen() {
 
     document.getElementById("movement-container").classList.remove("d-none");
     document.getElementById("actions-container").classList.remove("d-none");
+
+    document.getElementById("game-over-screen").classList.remove("game-over-animation-open");
     
     init();
 }

@@ -9,7 +9,8 @@ class MovableObject extends DrawableObject {
     totalCoin = 0;
     totalBottle = 0;
     lastHit = 0;
-
+    statusActions = undefined;
+    lastStatus = 0;
 
     applyGravity() {
         const interval_1 = setInterval(() => {
@@ -52,20 +53,20 @@ class MovableObject extends DrawableObject {
     }
 
     isCollisionFromAbove(obj) {
-        return this.y + this.height >= obj.y &&
-        this.y + this.height <  obj.y + obj.height;
-
-    }
-
-    checkCollisionFromAbove() {
-        if (this.y + this.height >= obj.y) {
-            console.log("Chicken dead");
-        }
+        return (this.x + this.width - this.offset.right > obj.x + obj.width ||
+            this.x + this.offset.left < obj.x) &&
+            this.y + this.height >= obj.y &&
+            this.y + this.height < obj.y + obj.height &&
+            this.speedY < 0;
     }
 
     hit() {
-        this.energy -= 1;
-        // this.energy -= 0.15;
+        if (this instanceof Character) {
+            this.energy -= 0.15;
+        } else {
+            this.energy -= 1;
+        }
+
         if (this.energy < 0) {
             this.energy = 0;
         } else {

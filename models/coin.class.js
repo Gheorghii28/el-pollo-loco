@@ -7,9 +7,9 @@ class Coin extends DrawableObject {
         left: 25,
         right: 25
     }
+
     constructor(imagePath, y) {
         super().loadImage(imagePath);
-        // this.x = x;
         this.x = 300 + Math.random() * 3000;
         this.y = y;
     }

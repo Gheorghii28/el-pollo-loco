@@ -50,15 +50,15 @@ class DrawableObject {
                 ctx.rect(
                     this.x + 20,
                     this.y + 80,
-                    this.width -50,
+                    this.width - 50,
                     this.height - 90
                 );
             } else if (this instanceof Coin) {
                 ctx.rect(
-                    this.x +25, 
-                    this.y +25,
-                    this.width -50,
-                    this.height -50
+                    this.x + 25,
+                    this.y + 25,
+                    this.width - 50,
+                    this.height - 50
                 );
             } else if (this instanceof Bottle) {
                 ctx.rect(

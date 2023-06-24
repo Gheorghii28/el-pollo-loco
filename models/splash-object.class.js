@@ -14,8 +14,9 @@ class SplashObject extends MovableObject {
     }
 
     animate() {
-        setInterval(() => {
+        const interval_1 = setInterval(() => {
             this.playAnimation(this.IMAGES_SPLASH);
         }, 50);
+        intervalsIds.push(interval_1);
     }
 }

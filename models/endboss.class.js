@@ -42,7 +42,7 @@ class Endboss extends MovableObject {
     }
 
     animate() {
-        setInterval(() => {
+        const intervalID_1 = setInterval(() => {
             if (this.world.character.x > 3500 && !this.hadFirstContact) {
                 this.hadFirstContact = true;
                 this.setAnimationState('isAlert');
@@ -97,6 +97,7 @@ class Endboss extends MovableObject {
     
 
         }, 200);
+        intervalsIds.push(intervalID_1);
     }
     
     setAnimationState(currentAnimation) {
@@ -112,14 +113,15 @@ class Endboss extends MovableObject {
                 this.continueMoving = false;
                 this.setAnimationState('isAttacking');
             }, 2000);
-            const interval = setInterval(() => {
+            const interval_2 = setInterval(() => {
                 if (this.continueMoving) {
                     this.setAnimationState('isWalking');
                     this.moveLeft();
                 } else {
-                    clearInterval(interval);
+                    clearInterval(interval_2);
                 }
             }, this.frameDuration);
+            intervalsIds.push(interval_2);
         }, 1000);
     }
 }

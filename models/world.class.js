@@ -37,12 +37,14 @@ class World {
     }
 
     run() {
-        setInterval(() => {
+        const interval_1 = setInterval(() => {
             this.checkCollision();
         }, 1000 / 60);
-        setInterval(() => {
+        intervalsIds.push(interval_1);
+        const interval_2 = setInterval(() => {
             this.checkThrowObjects();
         }, 1000 / 5);
+        intervalsIds.push(interval_2);
     }
 
     checkThrowObjects() {
@@ -85,13 +87,14 @@ class World {
                 this.statusBarBottle.setPercentage(this.character.totalBottle);
             }
         });
+
         this.throwableObject.forEach(obj => {
             if (this.endBoss.isColliding(obj)) {
                 setTimeout(() => {
                     let splash = new SplashObject(obj.x, obj.y);
                     this.endBoss.removeCollectiblesFromLevel(this.throwableObject, obj);
                     this.splashObject.push(splash);
-                    setTimeout(() => { 
+                    setTimeout(() => {
                         this.endBoss.removeCollectiblesFromLevel(this.splashObject, splash);
                     }, 50);
                 }, 100);
@@ -125,7 +128,9 @@ class World {
 
         this.addToMap(this.character);
         this.addToMap(this.endBoss);
+
         this.addObjectsToMap(this.level.enemies);
+
         this.addObjectsToMap(this.throwableObject);
         this.addObjectsToMap(this.splashObject);
 

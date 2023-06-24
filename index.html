@@ -38,12 +38,13 @@
     <script src="models/level.class.js"></script>
     <script src="models/throwable-object.class.js"></script>
     <script src="models/splash-object.class.js"></script>
-    <script src="levels/level1.js"></script>
+
     <script src="models/world.class.js"></script>
-    <script src="js/game.js"></script>
+    <script src="levels/level1.js"></script>
+
 </head>
 
-<body onload="init()">
+<body onload="">
 
     <h1 id="headline">El pollo loco</h1>
 
@@ -54,7 +55,8 @@
             <img id="game-over-screen" src="./img/9_intro_outro_screens/game_over/game over.png">
             <div class="top-0" id="nav-bar-right">
                 <div>
-                    <img onclick="toggleSound(this)" id="sound-icon" class="sound-icon-clicked" src="./img/icons/sound-waves.png">
+                    <img onclick="toggleSound(this)" id="sound-icon" class="sound-icon-clicked"
+                        src="./img/icons/sound-waves.png">
                 </div>
                 <div>
                     <img id="info-icon" src="./img/icons/about.png">
@@ -84,25 +86,25 @@
                 </div>
             </div>
             <div id="movement-container" class="d-none">
-                <div ontouchstart="setKeyboardLeft(event)" ontouchend="resetKeyboardLeft(event)">
+                <div>
                     <img id="left-button" class="" src="./img/icons/left.png">
                 </div>
-                <div ontouchstart="setKeyboardRight(event)" ontouchend="resetKeyboardRight(event)">
+                <div>
                     <img id="right-button" class="" src="./img/icons/right.png">
                 </div>
             </div>
             <div id="actions-container" class="d-none">
-                <div ontouchstart="setKeyboardJump(event)" ontouchend="resetKeyboardJump(event)">
+                <div>
                     <img id="jump-button" class="" src="./img/icons/jump.png">
                 </div>
-                <div ontouchstart="setKeyboardThrow(event)" ontouchend="resetKeyboardThrow(event)">
+                <div>
                     <img id="bottle-button" class="" src="./img/icons/bottle.png">
                 </div>
             </div>
         </div>
     </div>
 
-
+    <script src="js/game.js"></script>
 
 </body>
 

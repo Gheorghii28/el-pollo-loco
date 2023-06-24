@@ -4,16 +4,43 @@ let world;
 let keyboard = new Keyboard();
 let endGame = false;
 let isSoundClicked = true;
-let elPolloLocoSound = new Audio("../audio/el-pollo-loco.mp3")
+let elPolloLocoSound = new Audio("../audio/el-pollo-loco.mp3");
+let firstStartGame = false;
+let intervalsIds = [];
 
-function init() {
+function stopGame() {
+    intervalsIds.forEach(clearInterval);
+    intervalsIds = [];
+}
+
+function testInterval() {
+    console.log("world start")
+}
+
+function startGame() {
+    initLevel();
     canvas = document.getElementById("canvas");
     world = new World(canvas, keyboard);
-
-    setInterval(() => {
+    
+    const interval_1 = setInterval(() => {
         checkGameOver();
     }, 1000 / 60);
+    intervalsIds.push(interval_1);
+}
 
+function resetGame() {
+    if(!firstStartGame) {
+        startGame();
+        firstStartGame = true;
+    } else {
+        stopGame();
+        startGame();
+    }
+}
+
+function init() {
+    resetGame();
+    console.log("init")
 }
 
 function checkGameOver() {
@@ -31,8 +58,8 @@ function checkGameOver() {
 }
 
 function replayAudio() {
-    elPolloLocoSound.currentTime = 0; // Setzt die aktuelle Zeit auf 0 (Anfang)
-    elPolloLocoSound.play(); // Startet die Wiedergabe
+    elPolloLocoSound.currentTime = 0;
+    elPolloLocoSound.play();
 }
 
 function toggleSound(event) {
@@ -58,6 +85,8 @@ function hideStartScreen() {
 
     document.getElementById("movement-container").classList.remove("d-none");
     document.getElementById("actions-container").classList.remove("d-none");
+    
+    init();
 }
 
 function showControls() {
@@ -119,86 +148,4 @@ function minimizeScreen() {
     document.getElementById("game-over-screen").classList.remove("border-radius-0");
 }
 
-function setKeyboardRight(event) {
-    event.preventDefault();
-    keyboard.RIGHT = true;
-}
-
-function resetKeyboardRight(event) {
-    event.preventDefault();
-    keyboard.RIGHT = false;
-}
-
-function setKeyboardLeft(event) {
-    event.preventDefault();
-    keyboard.LEFT = true;
-}
-
-function resetKeyboardLeft(event) {
-    event.preventDefault();
-    keyboard.LEFT = false;
-}
-
-function setKeyboardJump(event) {
-    event.preventDefault();
-    keyboard.SPACE = true;
-}
-
-function resetKeyboardJump(event) {
-    event.preventDefault();
-    keyboard.SPACE = false;
-}
-
-function setKeyboardThrow(event) {
-    event.preventDefault();
-    keyboard.D = true;
-}
-
-function resetKeyboardThrow(event) {
-    event.preventDefault();
-    keyboard.D = false;
-}
-
 elPolloLocoSound.addEventListener("ended", replayAudio);
-
-window.addEventListener("keydown", el => {
-    if (el.keyCode == 39) {
-        keyboard.RIGHT = true;
-    }
-    if (el.keyCode == 37) {
-        keyboard.LEFT = true;
-    }
-    if (el.keyCode == 38) {
-        keyboard.UP = true;
-    }
-    if (el.keyCode == 40) {
-        keyboard.DOWN = true;
-    }
-    if (el.keyCode == 32) {
-        keyboard.SPACE = true;
-    }
-    if (el.keyCode == 68) {
-        keyboard.D = true;
-    }
-});
-
-window.addEventListener("keyup", el => {
-    if (el.keyCode == 39) {
-        keyboard.RIGHT = false;
-    }
-    if (el.keyCode == 37) {
-        keyboard.LEFT = false;
-    }
-    if (el.keyCode == 38) {
-        keyboard.UP = false;
-    }
-    if (el.keyCode == 40) {
-        keyboard.DOWN = false;
-    }
-    if (el.keyCode == 32) {
-        keyboard.SPACE = false;
-    }
-    if (el.keyCode == 68) {
-        keyboard.D = false;
-    }
-});

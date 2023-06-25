@@ -67,21 +67,21 @@
                     <img onclick="showStartScreen()" id="backward-icon" class="d-none" src="./img/icons/backward.png">
                 </div>
                 <div>
-                    <img onclick="maximizeScreen()" id="maximize-icon" src="./img/icons/maximize.png">
+                    <img onclick="toggleSizeScreen(`add`, `remove`)" id="maximize-icon" src="./img/icons/maximize.png">
                 </div>
                 <div>
-                    <img onclick="minimizeScreen()" id="minimize-icon" class="d-none" src="./img/icons/minimize.png">
+                    <img onclick="toggleSizeScreen(`remove`, `add`)" id="minimize-icon" class="d-none" src="./img/icons/minimize.png">
                 </div>
             </div>
             <div id="play-container">
-                <img onclick="hideStartScreen()" id="play-button" src="./img/icons/play-button.png">
+                <img onclick="startGameAndHideStartScreen()" id="play-button" src="./img/icons/play-button.png">
             </div>
             <div id="pause-container">
                 <div>
-                    <img onclick="showControls()" id="pause-button" class="d-none" src="./img/icons/pause-button.png">
+                    <img onclick="pauseGameAndShowControls()" id="pause-button" class="d-none" src="./img/icons/pause-button.png">
                 </div>
                 <div>
-                    <img onclick="hideControls()" id="play-button-small" class="d-none"
+                    <img onclick="resumeGameAndHideControls()" id="play-button-small" class="d-none"
                         src="./img/icons/play-button-small.png">
                 </div>
             </div>
@@ -102,6 +102,10 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    <div id="screen-rotate">
+        <img src="../img/mobile-rotation.png">
     </div>
 
     <script src="js/game.js"></script>

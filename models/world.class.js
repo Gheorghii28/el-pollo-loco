@@ -47,10 +47,13 @@ class World {
     }
 
     checkThrowObjects() {
-        if (this.keyboard.D) {
+        if (this.keyboard.D && this.character.hasBottles > 0) {
             this.character.lastStatus = 0;
             let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
             this.throwableObject.push(bottle);
+            this.character.hasBottles--;
+            this.character.totalBottle -= 10;
+            this.statusBarBottle.setPercentage(this.character.totalBottle);
         }
     }
 
@@ -138,14 +141,16 @@ class World {
     }
 
     draw() {
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        this.ctx.translate(this.camera_x, 0);
-        this.addLevelObjectsToMap();
-        this.ctx.translate(-this.camera_x, 0);
-        this.addToMapFixedElements();
-        this.ctx.translate(this.camera_x, 0);
-        this.addGameElementsToMap();
-        this.ctx.translate(-this.camera_x, 0);
+        if (!isPaused) {
+            this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+            this.ctx.translate(this.camera_x, 0);
+            this.addLevelObjectsToMap();
+            this.ctx.translate(-this.camera_x, 0);
+            this.addToMapFixedElements();
+            this.ctx.translate(this.camera_x, 0);
+            this.addGameElementsToMap();
+            this.ctx.translate(-this.camera_x, 0);
+        }
         requestAnimationFrame(() => {
             this.draw();
         });

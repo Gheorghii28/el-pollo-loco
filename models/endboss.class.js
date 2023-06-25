@@ -48,17 +48,16 @@ class Endboss extends MovableObject {
                 this.setAnimationState('isAlert');
             }
 
-            if(this.isDead()) {
+            if (this.isDead()) {
                 this.setAnimationState(`isDead`);
-                
             }
-    
+
             if (this.animations.isWalking && this.currentAnimation !== 'isWalking') {
                 this.currentAnimation = 'isWalking';
                 this.playAnimation(this.IMAGES_WALKING);
                 this.currentAnimation = null;
             }
-    
+
             if (this.animations.isAlert && this.currentAnimation !== 'isAlert') {
                 this.currentAnimation = 'isAlert';
                 this.playAnimation(this.IMAGES_ALERT);
@@ -73,14 +72,14 @@ class Endboss extends MovableObject {
                 setTimeout(() => { this.setAnimationState('isAlert'); }, 1000);
                 this.continueMoving = true;
             }
-    
+
             if (this.animations.isHurt && this.currentAnimation !== 'isHurt') {
                 this.currentAnimation = 'isHurt';
                 this.playAnimation(this.IMAGES_HURT);
                 this.currentAnimation = null;
                 this.startMovingAnimation();
             }
-    
+
             if (this.animations.isDead && this.currentAnimation !== 'isDead') {
                 this.currentAnimation = 'isDead';
                 this.playAnimation(this.IMAGES_DEAD);
@@ -91,15 +90,15 @@ class Endboss extends MovableObject {
             if (this.animations.isDeadEnd) {
                 this.currentAnimation = 'isDeadEnd';
                 this.playAnimation(this.IMAGES_IS_DEAD);
-                // this.currentAnimation = null;
+                setTimeout(() => { isPaused = true; endGame = true; }, 100);
+                console.log("endBoss is dead")
             }
-            //  && this.currentAnimation !== 'isDeadEnd'
-    
+
 
         }, 200);
         intervalsIds.push(intervalID_1);
     }
-    
+
     setAnimationState(currentAnimation) {
         Object.keys(this.animations).forEach((key) => {
             this.animations[key] = false;
@@ -116,7 +115,9 @@ class Endboss extends MovableObject {
             const interval_2 = setInterval(() => {
                 if (this.continueMoving) {
                     this.setAnimationState('isWalking');
-                    this.moveLeft();
+                    if (!this.animations.isDeadEnd) {
+                        this.moveLeft();
+                    }
                 } else {
                     clearInterval(interval_2);
                 }

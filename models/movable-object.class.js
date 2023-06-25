@@ -31,11 +31,15 @@ class MovableObject extends DrawableObject {
     }
 
     moveRight() {
-        this.x += this.speed;
+        if (!isPaused) {
+            this.x += this.speed;
+        }
     }
 
     moveLeft() {
-        this.x -= this.speed;
+        if (!isPaused) {
+            this.x -= this.speed;
+        }
     }
 
     playAnimation(images) {
@@ -64,7 +68,7 @@ class MovableObject extends DrawableObject {
         if (this instanceof Character) {
             this.energy -= 0.15;
         } else {
-            this.energy -= 1;
+            this.energy -= 2;
         }
 
         if (this.energy < 0) {

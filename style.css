@@ -16,6 +16,8 @@ body {
     background: url("./img/background.jpg") center no-repeat;
     background-size: cover;
     background-attachment: fixed;
+    height: 100vh;
+    cursor: url("../img/icons/mause.png"), auto;
 }
 
 .d-none {
@@ -52,11 +54,14 @@ body {
     position: relative;
 }
 
+#headline {
+    letter-spacing: 5px;
+    font-size: 50px;
+}
+
 canvas {
-    /* display: none !important; */
     width: 100%;
     height: 100%;
-
     background-color: black;
     display: block;
     border-radius: 10px;
@@ -130,7 +135,7 @@ canvas {
     border-radius: 10px;
     transition: all 0.225s;
     box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
-    cursor: pointer;
+    cursor: url('../img/icons/pointer.png'), auto;
 }
 
 #left-button,
@@ -194,7 +199,8 @@ canvas {
 
 #movement-container,
 #actions-container {
-    max-width: max-content !important;;
+    max-width: max-content !important;
+    ;
     gap: 50px;
     height: 54px;
     margin-left: 20px;
@@ -223,6 +229,34 @@ canvas {
     top: 0 !important;
 }
 
+#screen-rotate {
+    display: none;
+    width: 100%;
+    height: 100vh;
+    z-index: 100;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(to bottom, #0B9FC9, #EF9248);
+}
+
+#screen-rotate img {
+    animation: rotate-animation 4s infinite;
+}
+
+@keyframes rotate-animation {
+    0% {
+        transform: rotate(-45deg);
+    }
+
+    90% {
+        transform: rotate(-135deg);
+    }
+
+    100% {
+        transform: rotate(-45deg);
+    }
+}
+
 @keyframes openGameOverScreen {
     from {
         width: 0;
@@ -236,8 +270,19 @@ canvas {
 }
 
 @media only screen and (max-width: 720px) {
+    #headline {
+        display: none;
+    }
+
     #main {
+        display: none;
         width: 100%;
+    }
+
+    #screen-rotate {
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
     #maximize-icon,
@@ -254,6 +299,11 @@ canvas {
     #main {
         width: 100%;
         height: 100vh;
+        display: block !important;
+    }
+
+    #screen-rotate {
+        display: none !important;
     }
 
     #maximize-icon,

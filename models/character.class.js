@@ -12,6 +12,7 @@ class Character extends MovableObject {
         left: 20,
         right: 30
     }
+    hasBottles = 0;
 
     IMAGES_IDLE = IMAGES.character.IMAGES_IDLE;
     IMAGES_LONG_IDLE = IMAGES.character.IMAGES_LONG_IDLE;
@@ -72,6 +73,7 @@ class Character extends MovableObject {
     updatePlayerAnimation() {
         if (this.isDead()) {
             this.playAnimation(this.IMAGES_DEAD);
+            setTimeout(() => { isPaused = true; endGame = true; }, 2000);
         } else if (this.isHurt()) {
             this.playAnimation(this.IMAGES_HURT);
         } else if (this.isAboveGround()) {
@@ -85,11 +87,9 @@ class Character extends MovableObject {
         if (this.statusActions === 'idle' && this.lastStatus <= 100) {
             this.playAnimation(this.IMAGES_IDLE);
             this.statusActions = undefined;
-            console.log('test idle');
         } else if (this.statusActions === 'idle' && this.lastStatus > 100) {
             this.playAnimation(this.IMAGES_LONG_IDLE);
             this.statusActions = undefined;
-            console.log('test long idle');
         }
     }
 
@@ -107,18 +107,20 @@ class Character extends MovableObject {
         if (this.x < this.world.level.levelEndX && this.x < this.world.endBoss.x) {
             this.moveRight();
             this.otherDirection = false;
-            if (!this.isAboveGround()) {
-                this.walkingSound.play();
-            }
+            this.playWalkingSound();
         }
     }
 
     movePlayerLeft() {
         if (this.x > this.world.level.levelStartX) {
             this.moveLeft();
+            this.otherDirection = true;
+            this.playWalkingSound();
         }
-        this.otherDirection = true;
-        if (!this.isAboveGround()) {
+    }
+
+    playWalkingSound() {
+        if (!this.isAboveGround() && !isPaused && !this.isHurt()) {
             this.walkingSound.play();
         }
     }
@@ -137,7 +139,9 @@ class Character extends MovableObject {
     }
 
     jump() {
-        this.speedY = 30;
+        if (!isPaused) {
+            this.speedY = 30;
+        }
     }
 
     collectCoin(coin) {
@@ -149,9 +153,11 @@ class Character extends MovableObject {
     }
 
     collectBottle(bottle) {
+        this.hasBottles++;
         this.totalBottle += 10;
         if (this.totalBottle > 100) {
             this.totalBottle = 100;
+            this.hasBottles = 10;
         }
         this.removeCollectiblesFromLevel(this.world.level.bottles, bottle);
     }

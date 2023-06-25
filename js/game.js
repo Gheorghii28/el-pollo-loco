@@ -9,6 +9,7 @@ let firstStartGame = false;
 let intervalsIds = [];
 let isPaused = false;
 let checkGameOverInterval;
+let isInfoClose = true;
 
 function stopGame() {
     intervalsIds.forEach(clearInterval);
@@ -56,7 +57,7 @@ function resumeGameAndHideControls() {
 }
 
 function showGameOverScreen() {
-    document.getElementById("game-over-screen").classList.add("game-over-animation-open");
+    document.getElementById("game-over-screen").classList.add("openScreen-animation");
     hideGameControls();
 }
 
@@ -86,6 +87,32 @@ function showStartScreen() {
     showNavigationBarAndHidePauseButton();
     hidePlayButtonAndRemoveTranslucentBg();
     hideGameControls();
+}
+
+function toggleInfoContainerVisibility() {
+    const parentInfoContainer = document.getElementById("parent-info-container");
+    const infoContainer = document.getElementById("info-container");
+    const infoIcon = document.getElementById("info-icon");
+    if (isInfoClose) {
+        openInfo(parentInfoContainer, infoIcon, infoContainer);
+    } else {
+        closeInfo(parentInfoContainer, infoIcon, infoContainer);
+    }
+    isInfoClose = !isInfoClose;
+}
+
+function openInfo(parentInfoContainer, infoIcon, infoContainer) {
+    parentInfoContainer.classList.remove("d-none");
+    infoIcon.classList.add("info-icon-clicked");
+    infoContainer.classList.add("openInfoScreen-animation");
+    infoContainer.classList.remove("closeInfoScreen-animation");
+}
+
+function closeInfo(parentInfoContainer, infoIcon, infoContainer) {
+    setTimeout(() => { parentInfoContainer.classList.add("d-none"); }, 1000);
+    infoIcon.classList.remove("info-icon-clicked");
+    infoContainer.classList.remove("openInfoScreen-animation");
+    infoContainer.classList.add("closeInfoScreen-animation");
 }
 
 function hideGameControls() {
@@ -135,7 +162,7 @@ function hideStartScreenAndShowGameElements() {
     document.getElementById("play-button").classList.add("d-none");
     document.getElementById("movement-container").classList.remove("d-none");
     document.getElementById("actions-container").classList.remove("d-none");
-    document.getElementById("game-over-screen").classList.remove("game-over-animation-open");
+    document.getElementById("game-over-screen").classList.remove("openScreen-animation");
 }
 
 function toggleSizeScreen(method_X, method_Y) {
@@ -171,19 +198,19 @@ function playAudioWithFadeIn(audio) {
     audio.volume = 0;
     audio.play();
     let volume = 0;
-    const fadeStep = 0.1;
+    const fadeStep = 0.01;
     const fadeInterval = setInterval(() => {
-        if (volume >= 1) {
+        if (volume >= 0.1) {
             clearInterval(fadeInterval);
         } else {
-            volume = Math.min(1, volume + fadeStep);
+            volume = Math.min(0.1, volume + fadeStep);
             audio.volume = volume;
         }
     }, 100);
 }
 
 function pauseAudioWithFadeOut(audio) {
-    const fadeStep = 0.1;
+    const fadeStep = 0.01;
     let volume = audio.volume;
     const fadeInterval = setInterval(() => {
         if (volume <= fadeStep) {

@@ -7,6 +7,8 @@ class Bottle extends DrawableObject {
         left: 10,
         right: 10
     }
+
+    collectSound = new Audio("./audio/bottle.mp3");
     
     constructor(imagePath, y) {
         super().loadImage(imagePath);

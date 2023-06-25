@@ -5,6 +5,8 @@ class ChickenSmall extends Chicken {
     IMAGES_WALKING = IMAGES.chickenSmall.IMAGES_WALKING;
     IMAGES_DEAD = IMAGES.chickenSmall.IMAGES_DEAD;
 
+    isDeadSound = new Audio("./audio/chicken-small-dead.mp3");
+
     constructor() {
         super().loadImage(`../img/3_enemies_chicken/chicken_small/1_walk/1_w.png`);
         this.loadImages(this.IMAGES_WALKING);

@@ -6,6 +6,9 @@ class Character extends MovableObject {
     height = 240;
     world;
     walkingSound = new Audio(`../audio/walk.mp3`);
+    jumpSound = new Audio("../audio/jump.mp3");
+    isHurtSound = new Audio("./audio/character-hurt.mp3");
+    isDeadSound = new Audio("./audio/character-dead.mp3");
     offset = {
         top: 80,
         bottom: 10,
@@ -66,6 +69,7 @@ class Character extends MovableObject {
         }
         if (this.world.keyboard.SPACE) {
             this.playerJump();
+            this.playJumpSound();
         }
         this.updateCamera();
     }
@@ -73,6 +77,7 @@ class Character extends MovableObject {
     updatePlayerAnimation() {
         if (this.isDead()) {
             this.playAnimation(this.IMAGES_DEAD);
+            this.isDeadSound.play();
             setTimeout(() => { isPaused = true; endGame = true; }, 2000);
         } else if (this.isHurt()) {
             this.playAnimation(this.IMAGES_HURT);
@@ -125,6 +130,12 @@ class Character extends MovableObject {
         }
     }
 
+    playJumpSound() {
+        if(!this.isAboveGround()) {
+            this.jumpSound.play();
+        }
+    }
+
     playerJump() {
         if (!this.isAboveGround()) {
             this.lastStatus = 0;
@@ -149,6 +160,7 @@ class Character extends MovableObject {
         if (this.totalCoin > 100) {
             this.totalCoin = 100;
         }
+        coin.collectSound.play();
         this.removeCollectiblesFromLevel(this.world.level.coins, coin)
     }
 
@@ -159,6 +171,7 @@ class Character extends MovableObject {
             this.totalBottle = 100;
             this.hasBottles = 10;
         }
+        bottle.collectSound.play();
         this.removeCollectiblesFromLevel(this.world.level.bottles, bottle);
     }
 

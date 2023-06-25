@@ -8,6 +8,8 @@ class Coin extends DrawableObject {
         right: 25
     }
 
+    collectSound = new Audio("./audio/coin.mp3");
+
     constructor(imagePath, y) {
         super().loadImage(imagePath);
         this.x = 300 + Math.random() * 3000;

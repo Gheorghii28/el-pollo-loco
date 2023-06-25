@@ -2,6 +2,8 @@ class ThrowableObject extends MovableObject {
 
     IMAGES_ROTATION = IMAGES.bottle.IMAGES_ROTATION;
 
+    throwSound = new Audio("./audio/throw.mp3");
+
     constructor(x, y) {
         super().loadImage(`../img/6_salsa_bottle/salsa_bottle.png`);
         this.loadImages(this.IMAGES_ROTATION);
@@ -21,6 +23,7 @@ class ThrowableObject extends MovableObject {
             this.x += 10;
         }, 25);
         intervalsIds.push(interval_1);
+        this.throwSound.play();
     }
 
     animate() {

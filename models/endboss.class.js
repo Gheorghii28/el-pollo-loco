@@ -22,6 +22,8 @@ class Endboss extends MovableObject {
     }
     currentAnimation = null;
 
+    isHurtSound = new Audio("./audio/endBoss-hurt.mp3");
+
     IMAGES_WALKING = IMAGES.endBoss.IMAGES_WALKING;
     IMAGES_ALERT = IMAGES.endBoss.IMAGES_ALERT;
     IMAGES_ATTACK = IMAGES.endBoss.IMAGES_ATTACK;
@@ -76,6 +78,7 @@ class Endboss extends MovableObject {
             if (this.animations.isHurt && this.currentAnimation !== 'isHurt') {
                 this.currentAnimation = 'isHurt';
                 this.playAnimation(this.IMAGES_HURT);
+                this.isHurtSound.play();
                 this.currentAnimation = null;
                 this.startMovingAnimation();
             }

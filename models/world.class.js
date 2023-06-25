@@ -127,6 +127,7 @@ class World {
         if (enemy instanceof Chicken) {
             this.character.speedY = 20;
             enemy.dead();
+            enemy.isDeadSound.play();
             setTimeout(() => {
                 this.character.removeCollectiblesFromLevel(this.level.enemies, enemy);
             }, 500);
@@ -136,7 +137,10 @@ class World {
     handleCollisionWithEnemy(enemy) {
         if (!enemy.isDead()) {
             this.character.hit();
+            this.character.isHurtSound.play();
             this.statusBarHealth.setPercentage(this.character.energy);
+        } else {
+            this.character.isHurtSound.pause();
         }
     }
 

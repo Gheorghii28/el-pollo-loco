@@ -59,7 +59,7 @@
                         src="./img/icons/sound-waves.png">
                 </div>
                 <div>
-                    <img id="info-icon" src="./img/icons/about.png">
+                    <img onclick="toggleInfoContainerVisibility()" id="info-icon" src="./img/icons/about.png">
                 </div>
             </div>
             <div class="top-0 gap-0" id="nav-bar-left">
@@ -70,7 +70,8 @@
                     <img onclick="toggleSizeScreen(`add`, `remove`)" id="maximize-icon" src="./img/icons/maximize.png">
                 </div>
                 <div>
-                    <img onclick="toggleSizeScreen(`remove`, `add`)" id="minimize-icon" class="d-none" src="./img/icons/minimize.png">
+                    <img onclick="toggleSizeScreen(`remove`, `add`)" id="minimize-icon" class="d-none"
+                        src="./img/icons/minimize.png">
                 </div>
             </div>
             <div id="play-container">
@@ -78,7 +79,8 @@
             </div>
             <div id="pause-container">
                 <div>
-                    <img onclick="pauseGameAndShowControls()" id="pause-button" class="d-none" src="./img/icons/pause-button.png">
+                    <img onclick="pauseGameAndShowControls()" id="pause-button" class="d-none"
+                        src="./img/icons/pause-button.png">
                 </div>
                 <div>
                     <img onclick="resumeGameAndHideControls()" id="play-button-small" class="d-none"
@@ -99,6 +101,26 @@
                 </div>
                 <div>
                     <img id="bottle-button" class="" src="./img/icons/bottle.png">
+                </div>
+            </div>
+            <div id="parent-info-container" class="d-none">
+                <div id="info-container">
+                    <div>
+                        <img src="./img/keyboard-symbol/left.svg" alt="">
+                        <span>move Left</span>
+                    </div>
+                    <div>
+                        <img src="./img/keyboard-symbol/right.svg" alt="">
+                        <span>move Right</span>
+                    </div>
+                    <div>
+                        <img src="./img/keyboard-symbol/letter-d.png" alt="">
+                        <span>Throw</span>
+                    </div>
+                    <div>
+                        <img src="./img/keyboard-symbol/underscore-space.svg" alt="">
+                        <span>Jump</span>
+                    </div>
                 </div>
             </div>
         </div>

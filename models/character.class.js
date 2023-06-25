@@ -131,13 +131,13 @@ class Character extends MovableObject {
     }
 
     playJumpSound() {
-        if(!this.isAboveGround()) {
+        if(!this.isAboveGround() && !isPaused) {
             this.jumpSound.play();
         }
     }
 
     playerJump() {
-        if (!this.isAboveGround()) {
+        if (!this.isAboveGround() && !isPaused) {
             this.lastStatus = 0;
             this.jump();
         }

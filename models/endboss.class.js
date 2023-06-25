@@ -23,6 +23,7 @@ class Endboss extends MovableObject {
     currentAnimation = null;
 
     isHurtSound = new Audio("./audio/endBoss-hurt.mp3");
+    isDeadSound = new Audio("./audio/endBoss-dead.mp3");
 
     IMAGES_WALKING = IMAGES.endBoss.IMAGES_WALKING;
     IMAGES_ALERT = IMAGES.endBoss.IMAGES_ALERT;
@@ -45,61 +46,85 @@ class Endboss extends MovableObject {
 
     animate() {
         const intervalID_1 = setInterval(() => {
-            if (this.world.character.x > 3500 && !this.hadFirstContact) {
-                this.hadFirstContact = true;
-                this.setAnimationState('isAlert');
-            }
-
+            this.checkFirstContact();
             if (this.isDead()) {
                 this.setAnimationState(`isDead`);
             }
-
-            if (this.animations.isWalking && this.currentAnimation !== 'isWalking') {
-                this.currentAnimation = 'isWalking';
-                this.playAnimation(this.IMAGES_WALKING);
-                this.currentAnimation = null;
-            }
-
-            if (this.animations.isAlert && this.currentAnimation !== 'isAlert') {
-                this.currentAnimation = 'isAlert';
-                this.playAnimation(this.IMAGES_ALERT);
-                this.currentAnimation = null;
-                this.startMovingAnimation();
-            }
-
-            if (this.animations.isAttacking && this.currentAnimation !== 'isAttacking') {
-                this.currentAnimation = 'isAttacking';
-                this.playAnimation(this.IMAGES_ATTACK);
-                this.currentAnimation = null;
-                setTimeout(() => { this.setAnimationState('isAlert'); }, 1000);
-                this.continueMoving = true;
-            }
-
-            if (this.animations.isHurt && this.currentAnimation !== 'isHurt') {
-                this.currentAnimation = 'isHurt';
-                this.playAnimation(this.IMAGES_HURT);
-                this.isHurtSound.play();
-                this.currentAnimation = null;
-                this.startMovingAnimation();
-            }
-
-            if (this.animations.isDead && this.currentAnimation !== 'isDead') {
-                this.currentAnimation = 'isDead';
-                this.playAnimation(this.IMAGES_DEAD);
-                this.currentAnimation = null;
-                this.setAnimationState(`isDeadEnd`);
-            }
-
-            if (this.animations.isDeadEnd) {
-                this.currentAnimation = 'isDeadEnd';
-                this.playAnimation(this.IMAGES_IS_DEAD);
-                setTimeout(() => { isPaused = true; endGame = true; }, 100);
-                console.log("endBoss is dead")
-            }
-
-
+            this.checkWalkingAnimation();
+            this.checkAlertAnimation();
+            this.checkAttackingAnimation();
+            this.checkHurtAnimation();
+            this.checkDeadAnimation();
+            this.handleDeadEndAnimation();
         }, 200);
         intervalsIds.push(intervalID_1);
+    }
+
+    checkFirstContact() {
+        if (this.world.character.x > 3500 && !this.hadFirstContact) {
+            this.hadFirstContact = true;
+            this.setAnimationState('isAlert');
+        }
+    }
+
+    checkWalkingAnimation() {
+        if (this.animations.isWalking && this.currentAnimation !== 'isWalking') {
+            this.currentAnimation = 'isWalking';
+            this.playAnimation(this.IMAGES_WALKING);
+            this.currentAnimation = null;
+        }
+    }
+
+    checkAlertAnimation() {
+        if (this.animations.isAlert && this.currentAnimation !== 'isAlert') {
+            this.currentAnimation = 'isAlert';
+            this.playAnimation(this.IMAGES_ALERT);
+            this.currentAnimation = null;
+            this.startMovingAnimation();
+        }
+    }
+
+    checkAttackingAnimation() {
+        if (this.animations.isAttacking && this.currentAnimation !== 'isAttacking') {
+            this.currentAnimation = 'isAttacking';
+            this.playAnimation(this.IMAGES_ATTACK);
+            this.currentAnimation = null;
+            setTimeout(() => {
+                this.setAnimationState('isAlert');
+            }, 1000);
+            this.continueMoving = true;
+        }
+    }
+
+    checkHurtAnimation() {
+        if (this.animations.isHurt && this.currentAnimation !== 'isHurt') {
+            this.currentAnimation = 'isHurt';
+            this.playAnimation(this.IMAGES_HURT);
+            this.isHurtSound.play();
+            this.currentAnimation = null;
+            this.startMovingAnimation();
+        }
+    }
+
+    checkDeadAnimation() {
+        if (this.animations.isDead && this.currentAnimation !== 'isDead') {
+            this.currentAnimation = 'isDead';
+            this.isDeadSound.play();
+            this.playAnimation(this.IMAGES_DEAD);
+            this.currentAnimation = null;
+            this.setAnimationState('isDeadEnd');
+        }
+    }
+
+    handleDeadEndAnimation() {
+        if (this.animations.isDeadEnd) {
+            this.currentAnimation = 'isDeadEnd';
+            this.playAnimation(this.IMAGES_IS_DEAD);
+            setTimeout(() => {
+                isPaused = true;
+                endGame = true;
+            }, 100);
+        }
     }
 
     setAnimationState(currentAnimation) {
@@ -111,21 +136,29 @@ class Endboss extends MovableObject {
 
     startMovingAnimation() {
         setTimeout(() => {
-            setTimeout(() => {
-                this.continueMoving = false;
-                this.setAnimationState('isAttacking');
-            }, 2000);
-            const interval_2 = setInterval(() => {
-                if (this.continueMoving) {
-                    this.setAnimationState('isWalking');
-                    if (!this.animations.isDeadEnd) {
-                        this.moveLeft();
-                    }
-                } else {
-                    clearInterval(interval_2);
-                }
-            }, this.frameDuration);
-            intervalsIds.push(interval_2);
+            this.startDelayedAttacking();
+            this.startWalkingAnimation();
         }, 1000);
+    }
+
+    startDelayedAttacking() {
+        setTimeout(() => {
+            this.continueMoving = false;
+            this.setAnimationState('isAttacking');
+        }, 2000);
+    }
+
+    startWalkingAnimation() {
+        const interval_2 = setInterval(() => {
+            if (this.continueMoving) {
+                this.setAnimationState('isWalking');
+                if (!this.animations.isDeadEnd) {
+                    this.moveLeft();
+                }
+            } else {
+                clearInterval(interval_2);
+            }
+        }, this.frameDuration);
+        intervalsIds.push(interval_2);
     }
 }

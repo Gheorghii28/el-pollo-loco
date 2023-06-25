@@ -378,4 +378,19 @@ canvas {
     #minimize-icon {
         display: none;
     }
+
+    #info-container,
+    canvas,
+    #utility-container,
+    #game-over-screen {
+        border-radius: 0;
+    }
+
+    #play-button {
+        width: 65px;
+    }
+
+    #play-container {
+        height: 64px;
+    }
 }

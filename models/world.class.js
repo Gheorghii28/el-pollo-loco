@@ -47,7 +47,7 @@ class World {
     }
 
     checkThrowObjects() {
-        if (this.keyboard.D && this.character.hasBottles > 0) {
+        if (this.keyboard.D && this.character.hasBottles > 0 && !isPaused) {
             this.character.lastStatus = 0;
             let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
             this.throwableObject.push(bottle);
@@ -58,13 +58,15 @@ class World {
     }
 
     checkCollision() {
-        if (this.character.isColliding(this.endBoss)) {
-            this.handleCollision(this.endBoss);
+        if (!isPaused) {
+            if (this.character.isColliding(this.endBoss)) {
+                this.handleCollision(this.endBoss);
+            }
+            this.handleEnemyCollision();
+            this.handleCoinCollision();
+            this.handleBottleCollision();
+            this.handleThrowableCollision();
         }
-        this.handleEnemyCollision();
-        this.handleCoinCollision();
-        this.handleBottleCollision();
-        this.handleThrowableCollision();
     }
 
     handleEnemyCollision() {
@@ -107,6 +109,7 @@ class World {
     createSplashObject(obj) {
         setTimeout(() => {
             let splash = new SplashObject(obj.x, obj.y);
+            splash.sound();
             this.endBoss.removeCollectiblesFromLevel(this.throwableObject, obj);
             this.splashObject.push(splash);
             setTimeout(() => {

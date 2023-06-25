@@ -5,14 +5,19 @@ let keyboard = new Keyboard();
 let endGame = false;
 let isSoundClicked = true;
 let elPolloLocoSound = new Audio("../audio/el-pollo-loco.mp3");
+let gameOverSound = new Audio("../audio/game-over.mp3");
+let endBossSound = new Audio("../audio/suspenseful-music.mp3");
 let firstStartGame = false;
 let intervalsIds = [];
 let isPaused = false;
 let checkGameOverInterval;
+let checkSoundInterval;
 let isInfoClose = true;
+let soundCondition;
 
 function stopGame() {
     intervalsIds.forEach(clearInterval);
+    clearInterval(checkSoundInterval);
     intervalsIds = [];
     isPaused = true;
 }
@@ -23,17 +28,13 @@ function startGame() {
     initLevel();
     canvas = document.getElementById("canvas");
     world = new World(canvas, keyboard);
-
-    checkGameOverInterval = setInterval(() => {
-        checkGameOver();
-    }, 1000 / 60);
-}
-
-function init() {
+    checkGameOverInterval = setInterval(() => { checkGameOver(); }, 1000 / 60);
+    checkSoundInterval = setInterval(() => { checkCurrentSound() }, 1000 / 60);
 }
 
 function checkGameOver() {
     if ((world.endBoss.currentAnimation == `isDeadEnd` || world.character.isDead()) && endGame) {
+        setTimeout(() => { gameOverSound.play(); }, 1000);
         showGameOverScreen();
         showControlsWithDelay();
         stopGame();
@@ -87,6 +88,7 @@ function showStartScreen() {
     showNavigationBarAndHidePauseButton();
     hidePlayButtonAndRemoveTranslucentBg();
     hideGameControls();
+    handleElPolloLocoSound();
 }
 
 function toggleInfoContainerVisibility() {
@@ -147,7 +149,6 @@ function showStartScreenAndNavBarRight() {
     document.getElementById("play-button").classList.remove("d-none");
     document.getElementById("nav-bar-left").classList.add("gap-0");
     document.getElementById("backward-icon").classList.add("d-none");
-    console.log("backward-icon")
     document.getElementById("nav-bar-right").classList.remove("d-none");
 }
 
@@ -177,9 +178,34 @@ function toggleSizeScreen(method_X, method_Y) {
     document.getElementById("game-over-screen").classList[method_X]("border-radius-0");
 }
 
-function replayAudio() {
-    elPolloLocoSound.currentTime = 0;
-    playAudioWithFadeIn(elPolloLocoSound);
+function soundPlayCondition() {
+    return world.character.x > 3500 && !world.endBoss.hadFirstContact;
+}
+
+function isSoundPlaying(audio) {
+    return !audio.paused;
+}
+
+function handleElPolloLocoSound() {
+    if (isSoundPlaying(elPolloLocoSound)) {
+        pauseAudioWithFadeOut(elPolloLocoSound);
+        elPolloLocoSound = new Audio("../audio/el-pollo-loco.mp3");
+        playAudioWithFadeIn(elPolloLocoSound);
+    } else {
+        elPolloLocoSound = new Audio("../audio/el-pollo-loco.mp3");
+        playAudioWithFadeIn(elPolloLocoSound);
+    }
+}
+
+function checkCurrentSound() {
+    soundCondition = soundPlayCondition();
+    if (soundCondition) {
+        pauseAudioWithFadeOut(elPolloLocoSound);
+        elPolloLocoSound = new Audio("../audio/suspenseful-music.mp3");
+        if(!isSoundPlaying(elPolloLocoSound)) {
+            playAudioWithFadeIn(elPolloLocoSound);
+        }
+    }
 }
 
 function toggleSound(event) {
@@ -198,19 +224,19 @@ function playAudioWithFadeIn(audio) {
     audio.volume = 0;
     audio.play();
     let volume = 0;
-    const fadeStep = 0.01;
+    const fadeStep = 0.1;
     const fadeInterval = setInterval(() => {
-        if (volume >= 0.1) {
+        if (volume >= 0.5) {
             clearInterval(fadeInterval);
         } else {
-            volume = Math.min(0.1, volume + fadeStep);
+            volume = Math.min(0.5, volume + fadeStep);
             audio.volume = volume;
         }
     }, 100);
 }
 
 function pauseAudioWithFadeOut(audio) {
-    const fadeStep = 0.01;
+    const fadeStep = 0.1;
     let volume = audio.volume;
     const fadeInterval = setInterval(() => {
         if (volume <= fadeStep) {
@@ -221,6 +247,11 @@ function pauseAudioWithFadeOut(audio) {
             audio.volume = volume;
         }
     }, 100);
+}
+
+function replayAudio() {
+    elPolloLocoSound.currentTime = 0;
+    playAudioWithFadeIn(elPolloLocoSound);
 }
 
 elPolloLocoSound.addEventListener("ended", replayAudio);

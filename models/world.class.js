@@ -20,6 +20,7 @@ class World {
         right: 0,
     }
     requestId;
+    lastThrowTime = 0;
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext(`2d`);
@@ -48,13 +49,22 @@ class World {
 
     checkThrowObjects() {
         if (this.keyboard.D && this.character.hasBottles > 0 && !isPaused) {
-            this.character.lastStatus = 0;
-            let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
-            this.throwableObject.push(bottle);
-            this.character.hasBottles--;
-            this.character.totalBottle -= 10;
-            this.statusBarBottle.setPercentage(this.character.totalBottle);
+            const currentTime = Date.now();
+            const elapsedTime = currentTime - this.lastThrowTime;
+            if (elapsedTime >= 1000) {
+                this.throwBottle();
+                this.lastThrowTime = currentTime;
+            }
         }
+    }
+
+    throwBottle() {
+        this.character.lastStatus = 0;
+        let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100);
+        this.throwableObject.push(bottle);
+        this.character.hasBottles--;
+        this.character.totalBottle -= 10;
+        this.statusBarBottle.setPercentage(this.character.totalBottle);
     }
 
     checkCollision() {
@@ -197,10 +207,7 @@ class World {
         if (mo.otherDirection) {
             this.flipImage(mo);
         }
-
         mo.draw(this.ctx);
-        // mo.drawFrame(this.ctx);
-
         if (mo.otherDirection) {
             this.flipImageBack(mo);
         }

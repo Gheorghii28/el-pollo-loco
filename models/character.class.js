@@ -165,14 +165,16 @@ class Character extends MovableObject {
     }
 
     collectBottle(bottle) {
+        if(this.hasBottles < 10) {
+            bottle.collectSound.play();
+            this.removeCollectiblesFromLevel(this.world.level.bottles, bottle);
+        }
         this.hasBottles++;
         this.totalBottle += 10;
         if (this.totalBottle > 100) {
             this.totalBottle = 100;
             this.hasBottles = 10;
-        }
-        bottle.collectSound.play();
-        this.removeCollectiblesFromLevel(this.world.level.bottles, bottle);
+        } 
     }
 
     resetY() {

@@ -13,7 +13,14 @@ let isPaused = false;
 let checkGameOverInterval;
 let checkSoundInterval;
 let isInfoClose = true;
-let soundCondition;
+let changeCondition;
+const fullScreen = document.getElementById("main");
+const pauseText = document.getElementById("paused-text");
+
+function init() {
+    showGameElements();
+    startGame();
+}
 
 function stopGame() {
     intervalsIds.forEach(clearInterval);
@@ -42,17 +49,14 @@ function checkGameOver() {
     }
 }
 
-function startGameAndHideStartScreen() {
-    showGameElements();
-    startGame();
-}
-
 function pauseGameAndShowControls() {
     showPauseScreen();
+    document.getElementById("paused-text").classList.remove("d-none");
     isPaused = true;
 }
 
 function resumeGameAndHideControls() {
+    document.getElementById("paused-text").classList.add("d-none");
     hidePauseScreen();
     isPaused = false;
 }
@@ -89,6 +93,9 @@ function showStartScreen() {
     hidePlayButtonAndRemoveTranslucentBg();
     hideGameControls();
     handleElPolloLocoSound();
+    document.getElementById("paused-text").classList.add("d-none");
+    stopGame();
+    endGame = false;
 }
 
 function toggleInfoContainerVisibility() {
@@ -166,19 +173,53 @@ function hideStartScreenAndShowGameElements() {
     document.getElementById("game-over-screen").classList.remove("openScreen-animation");
 }
 
-function toggleSizeScreen(method_X, method_Y) {
-    document.getElementById("headline").classList[method_X]("d-none");
+function toggleSizeScreen(method_X, method_Y, action) {
     document.getElementById("maximize-icon").classList[method_X]("d-none");
     document.getElementById("minimize-icon").classList[method_Y]("d-none");
-    document.getElementById("main").classList[method_X]("width-100");
-    document.getElementById("main").classList[method_X]("height-100");
     document.getElementById("canvas").classList[method_X]("border-radius-0");
     document.getElementById("utility-container").classList[method_X]("border-radius-0");
     document.getElementById("start-screen").classList[method_X]("border-radius-0");
     document.getElementById("game-over-screen").classList[method_X]("border-radius-0");
+    if (action == "open") {
+        openFullscreen(fullScreen);
+    } else if (action == "close") {
+        closeFullscreen();
+    }
 }
 
-function soundPlayCondition() {
+document.addEventListener('fullscreenchange', function (e) {
+    if (!document.fullscreenElement) {
+        document.getElementById("maximize-icon").classList.remove("d-none");
+        document.getElementById("minimize-icon").classList.add("d-none");
+        document.getElementById("canvas").classList.remove("border-radius-0");
+        document.getElementById("utility-container").classList.remove("border-radius-0");
+        document.getElementById("start-screen").classList.remove("border-radius-0");
+        document.getElementById("game-over-screen").classList.remove("border-radius-0");
+    }
+});
+
+function openFullscreen(elem) {
+    if (elem.requestFullscreen) {
+        elem.requestFullscreen();
+    } else if (elem.webkitRequestFullscreen) {
+        elem.webkitRequestFullscreen();
+    } else if (elem.msRequestFullscreen) {
+        elem.msRequestFullscreen();
+    }
+    window.focus();
+}
+
+function closeFullscreen() {
+    if (document.exitFullscreen) {
+        document.exitFullscreen();
+    } else if (document.webkitExitFullscreen) {
+        document.webkitExitFullscreen();
+    } else if (document.msExitFullscreen) {
+        document.msExitFullscreen();
+    }
+}
+
+function changeSoundCondition() {
     return world.character.x > 3500 && !world.endBoss.hadFirstContact;
 }
 
@@ -193,16 +234,18 @@ function handleElPolloLocoSound() {
         playAudioWithFadeIn(elPolloLocoSound);
     } else {
         elPolloLocoSound = new Audio("../audio/el-pollo-loco.mp3");
-        playAudioWithFadeIn(elPolloLocoSound);
     }
 }
 
 function checkCurrentSound() {
-    soundCondition = soundPlayCondition();
-    if (soundCondition) {
-        pauseAudioWithFadeOut(elPolloLocoSound);
+    changeCondition = changeSoundCondition();
+    if (changeCondition) {
+        const isCurrentSoundPlaying = isSoundPlaying(elPolloLocoSound);
+        if (isCurrentSoundPlaying) {
+            pauseAudioWithFadeOut(elPolloLocoSound);
+        }
         elPolloLocoSound = new Audio("../audio/suspenseful-music.mp3");
-        if(!isSoundPlaying(elPolloLocoSound)) {
+        if (isCurrentSoundPlaying) {
             playAudioWithFadeIn(elPolloLocoSound);
         }
     }

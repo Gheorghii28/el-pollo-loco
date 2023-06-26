@@ -1,8 +1,7 @@
 class SplashObject extends MovableObject {
-
     IMAGES_SPLASH = IMAGES.bottle.IMAGES_SPLASH;
+    
     stopPlay = false;
-
     splashSound = new Audio("./audio/splash.mp3");
     isSplash = false;
 

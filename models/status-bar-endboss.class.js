@@ -1,5 +1,4 @@
 class StatusBarEndBoss extends DrawableObject {
-
     IMAGES = IMAGES.statusBarEndBoss.IMAGES;
     percentage = 100;
     otherDirection = true;

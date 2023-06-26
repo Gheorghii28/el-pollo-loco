@@ -30,50 +30,6 @@ class DrawableObject {
         ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
     }
 
-    drawFrame(ctx) {
-        if (this instanceof Character ||
-            this instanceof Chicken ||
-            this instanceof Endboss ||
-            this instanceof Coin ||
-            this instanceof Bottle) {
-            ctx.beginPath();
-            ctx.lineWidth = `5`;
-            ctx.strokeStyle = `blue`;
-            if (this instanceof Character) {
-                ctx.rect(
-                    this.x + 20,
-                    this.y + 80,
-                    this.width - 50,
-                    this.height - 90
-                );
-            } else if (this instanceof Endboss) {
-                ctx.rect(
-                    this.x + 20,
-                    this.y + 80,
-                    this.width - 50,
-                    this.height - 90
-                );
-            } else if (this instanceof Coin) {
-                ctx.rect(
-                    this.x + 25,
-                    this.y + 25,
-                    this.width - 50,
-                    this.height - 50
-                );
-            } else if (this instanceof Bottle) {
-                ctx.rect(
-                    this.x + 20,
-                    this.y + 10,
-                    this.width - 40,
-                    this.height - 20
-                );
-            } else {
-                ctx.rect(this.x, this.y, this.width, this.height);
-            }
-            ctx.stroke();
-        }
-    }
-
     removeCollectiblesFromLevel(collectiblesArr, collectible) {
         collectiblesArr.forEach((el, index) => {
             if (

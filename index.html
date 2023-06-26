@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" translate="no">
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google" content="notranslate">
     <link rel="stylesheet" href="style.css">
 
     <link rel="apple-touch-icon" sizes="180x180" href="./img/favicon_package/apple-touch-icon.png">
@@ -51,6 +52,7 @@
     <div id="main">
         <canvas id="canvas" width="720" height="480"></canvas>
         <div id="utility-container">
+            <span id="paused-text" class="d-none">Paused</span>
             <img class="" id="start-screen" src="./img/9_intro_outro_screens/start/startscreen_1.png">
             <img id="game-over-screen" src="./img/9_intro_outro_screens/game_over/game over.png">
             <div class="top-0" id="nav-bar-right">
@@ -67,15 +69,15 @@
                     <img onclick="showStartScreen()" id="backward-icon" class="d-none" src="./img/icons/backward.png">
                 </div>
                 <div>
-                    <img onclick="toggleSizeScreen(`add`, `remove`)" id="maximize-icon" src="./img/icons/maximize.png">
+                    <img onclick="toggleSizeScreen(`add`, `remove`, `open`)" id="maximize-icon" src="./img/icons/maximize.png">
                 </div>
                 <div>
-                    <img onclick="toggleSizeScreen(`remove`, `add`)" id="minimize-icon" class="d-none"
+                    <img onclick="toggleSizeScreen(`remove`, `add`, `close`)" id="minimize-icon" class="d-none"
                         src="./img/icons/minimize.png">
                 </div>
             </div>
             <div id="play-container">
-                <img onclick="startGameAndHideStartScreen()" id="play-button" src="./img/icons/play-button.png">
+                <img onclick="init()" id="play-button" src="./img/icons/play-button.png">
             </div>
             <div id="pause-container">
                 <div>

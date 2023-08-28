@@ -1,6 +1,6 @@
 @font-face {
     font-family: 'zabars';
-    src: url('./fonts/zabars.ttf') format('truetype');
+    src: url('fonts/zabars.ttf') format('truetype');
 }
 
 * {
@@ -13,11 +13,11 @@ body {
     flex-direction: column;
     align-items: center;
     margin: 0;
-    background: url("./img/background.jpg") center no-repeat;
+    background: url("img/background.jpg") center no-repeat;
     background-size: cover;
     background-attachment: fixed;
     height: 100vh;
-    cursor: url("../img/icons/mause.png"), auto;
+    cursor: url("img/icons/mause.png"), auto;
 }
 
 .d-none {
@@ -149,7 +149,7 @@ canvas {
     border-radius: 10px;
     transition: all 0.225s;
     box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
-    cursor: url('../img/icons/pointer.png'), auto;
+    cursor: url('img/icons/pointer.png'), auto;
 }
 
 #left-button,

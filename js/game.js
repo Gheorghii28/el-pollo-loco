@@ -4,9 +4,9 @@ let world;
 let keyboard = new Keyboard();
 let endGame = false;
 let isSoundClicked = true;
-let elPolloLocoSound = new Audio("../audio/el-pollo-loco.mp3");
-let gameOverSound = new Audio("../audio/game-over.mp3");
-let endBossSound = new Audio("../audio/suspenseful-music.mp3");
+let elPolloLocoSound = new Audio("./audio/el-pollo-loco.mp3");
+let gameOverSound = new Audio("./audio/game-over.mp3");
+let endBossSound = new Audio("./audio/suspenseful-music.mp3");
 let firstStartGame = false;
 let intervalsIds = [];
 let isPaused = false;
@@ -230,10 +230,10 @@ function isSoundPlaying(audio) {
 function handleElPolloLocoSound() {
     if (isSoundPlaying(elPolloLocoSound)) {
         pauseAudioWithFadeOut(elPolloLocoSound);
-        elPolloLocoSound = new Audio("../audio/el-pollo-loco.mp3");
+        elPolloLocoSound = new Audio("./audio/el-pollo-loco.mp3");
         playAudioWithFadeIn(elPolloLocoSound);
     } else {
-        elPolloLocoSound = new Audio("../audio/el-pollo-loco.mp3");
+        elPolloLocoSound = new Audio("./audio/el-pollo-loco.mp3");
     }
 }
 
@@ -244,7 +244,7 @@ function checkCurrentSound() {
         if (isCurrentSoundPlaying) {
             pauseAudioWithFadeOut(elPolloLocoSound);
         }
-        elPolloLocoSound = new Audio("../audio/suspenseful-music.mp3");
+        elPolloLocoSound = new Audio("./audio/suspenseful-music.mp3");
         if (isCurrentSoundPlaying) {
             playAudioWithFadeIn(elPolloLocoSound);
         }

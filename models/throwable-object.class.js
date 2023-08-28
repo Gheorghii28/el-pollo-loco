@@ -4,7 +4,7 @@ class ThrowableObject extends MovableObject {
     throwSound = new Audio("./audio/throw.mp3");
 
     constructor(x, y) {
-        super().loadImage(`../img/6_salsa_bottle/salsa_bottle.png`);
+        super().loadImage(`./img/6_salsa_bottle/salsa_bottle.png`);
         this.loadImages(this.IMAGES_ROTATION);
         this.x = x;
         this.y = y;

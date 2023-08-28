@@ -8,7 +8,7 @@ class ChickenSmall extends Chicken {
     isDeadSound = new Audio("./audio/chicken-small-dead.mp3");
 
     constructor() {
-        super().loadImage(`../img/3_enemies_chicken/chicken_small/1_walk/1_w.png`);
+        super().loadImage(`./img/3_enemies_chicken/chicken_small/1_walk/1_w.png`);
         this.loadImages(this.IMAGES_WALKING);
         this.loadImages(this.IMAGES_DEAD);
         this.animate();

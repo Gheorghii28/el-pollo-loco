@@ -5,8 +5,8 @@ class Character extends MovableObject {
     width = 122;
     height = 240;
     world;
-    walkingSound = new Audio(`../audio/walk.mp3`);
-    jumpSound = new Audio("../audio/jump.mp3");
+    walkingSound = new Audio(`./audio/walk.mp3`);
+    jumpSound = new Audio("./audio/jump.mp3");
     isHurtSound = new Audio("./audio/character-hurt.mp3");
     isDeadSound = new Audio("./audio/character-dead.mp3");
     offset = {
@@ -25,7 +25,7 @@ class Character extends MovableObject {
     IMAGES_HURT = IMAGES.character.IMAGES_HURT;
 
     constructor() {
-        super().loadImage(`../img/2_character_pepe/1_idle/idle/I-1.png`);
+        super().loadImage(`./img/2_character_pepe/1_idle/idle/I-1.png`);
         this.loadImages(this.IMAGES_IDLE);
         this.loadImages(this.IMAGES_LONG_IDLE);
         this.loadImages(this.IMAGES_WALKING);

@@ -13,7 +13,7 @@ class Chicken extends MovableObject {
     isDeadSound = new Audio("./audio/chicken-dead.mp3");
 
     constructor() {
-        super().loadImage(`../img/3_enemies_chicken/chicken_normal/1_walk/1_w.png`);
+        super().loadImage(`./img/3_enemies_chicken/chicken_normal/1_walk/1_w.png`);
         this.x = 300 + Math.random() * 4000;
         this.speed = 0.15 + Math.random() * 0.25;
         this.frameSpeed = this.frameSpeed - this.speed * 100;

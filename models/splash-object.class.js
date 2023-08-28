@@ -6,7 +6,7 @@ class SplashObject extends MovableObject {
     isSplash = false;
 
     constructor(x, y) {
-        super().loadImage(`../img/6_salsa_bottle/bottle_rotation/bottle_splash/6_bottle_splash.png`);
+        super().loadImage(`./img/6_salsa_bottle/bottle_rotation/bottle_splash/6_bottle_splash.png`);
         this.loadImages(this.IMAGES_SPLASH);
         this.x = x;
         this.y = y;

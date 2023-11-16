@@ -411,3 +411,16 @@ canvas {
         display: flex;
     }
 }
+
+.div-sound-icon-2 {
+    position: relative;
+}
+
+#sound-icon-2 {
+    position: absolute;
+    bottom: -16px;
+    left: 89px;
+    background: black;
+    border-radius: 5px;
+    cursor: pointer;
+}

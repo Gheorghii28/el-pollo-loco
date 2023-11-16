@@ -132,6 +132,7 @@ function hideGameControls() {
 function showNavigationBarAndHidePauseButton() {
     document.getElementById("nav-bar-left").classList.remove("d-none");
     document.getElementById("pause-button").classList.add("d-none");
+    document.getElementById("sound-icon-2").classList.add("d-none");
 }
 
 function showBackwardIconAndNavigationBar() {
@@ -144,6 +145,7 @@ function hideNavigationBarAndShowPauseButton() {
     document.getElementById("nav-bar-right").classList.add("d-none");
     document.getElementById("nav-bar-left").classList.add("d-none");
     document.getElementById("pause-button").classList.remove("d-none");
+    document.getElementById("sound-icon-2").classList.remove("d-none");
 }
 
 function hidePlayButtonAndRemoveTranslucentBg() {
